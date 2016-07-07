@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>World Tweet Visualizer</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.6/socket.io.js"></script>
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/three.min.js"></script>
+    <script type="text/javascript" src="js/orbit-controls.js"></script>
+
+</head>
+
+<body style="overflow: hidden; margin:0">
+    <div id="viewport"></div>
+
+    <aside class="tweet-box">
+        <input id="tweetSearch" class="tweet-search" type="text" name="tweet search" placeholder="Refine Search"></input>
+        <ul id="tweets" class="tweets">
+            
+        </ul>
+    </aside>
+
+    <span id="tweetText" class="tweet-text"></span>
+
+    <script type="text/javascript" src="js/main.js"></script>
+</body>
+
+</html>
