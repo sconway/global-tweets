@@ -3,6 +3,7 @@ var camera, scene, renderer, earth, clouds, $rows,
     curMouse = new THREE.Vector2(), 
     mouse = new THREE.Vector2(),
     earthGroup = new THREE.Object3D();
+    controlers = [],
     tweets = [],
     points = [],
     numPoints = 0;
@@ -31,7 +32,7 @@ function init() {
     
     // initialize the raycaster(for hovering), and the orbit controls(for dragging)
     raycaster = new THREE.Raycaster();
-    controls  = new THREE.OrbitControls( camera, renderer.domElement );
+    controlers.push( new THREE.OrbitControls( camera, renderer.domElement ) );
 
     document.addEventListener( 'mousemove', onDocumentMouseMove, false );
     window.addEventListener( 'resize', onWindowResize, false );
@@ -109,6 +110,11 @@ function addEarth() {
         earth.name = "earth";
         earthGroup.add( earth );
         scene.add( earthGroup );
+
+        // only enable the device controls if we're on a small device.
+        if ( window.innerWidth < 1024 ) {
+            controlers.push( new THREE.DeviceOrientationControls( earthGroup , true ) );
+        }
 
         addClouds();
         
@@ -342,10 +348,19 @@ function onNoIntersections() {
 }
 
 
+function updateControlers() {
+    var numControlers = controlers.length;
+
+    for (var i = 0; i < numControlers; i++) {
+        controlers[i].update();
+    }
+}
+
+
 function animate() {
     requestAnimationFrame( animate );
 
-    controls.update();
+    updateControlers();
     renderer.render( scene, camera );
     raycaster.setFromCamera( mouse, camera );
 
