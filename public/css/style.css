@@ -16,7 +16,8 @@ input:focus:-ms-input-placeholder {
 html,
 body {
   height: 100%;
-  width: 100%; }
+  width: 100%;
+  overflow: hidden; }
 
 .view-port {
   position: absolute;
@@ -29,7 +30,6 @@ body {
   .search-wrapper.active .search-box {
     opacity: 1; }
   .search-wrapper.active .search-icon path {
-    stroke: #fff;
     stroke-dashoffset: 10;
     stroke-dasharray: 200; }
   .search-wrapper.active + .tweet-box {
@@ -60,7 +60,39 @@ body {
   .search-icon:hover {
     cursor: pointer; }
   .search-icon path {
-    stroke: #000;
+    stroke: #fff;
+    stroke-width: 5px;
+    stroke-dasharray: 0;
+    stroke-dashoffset: 0;
+    transition: all 2s ease;
+    -webkit-transition: all 2s ease; }
+
+.search-box {
+  background: rgba(51, 51, 51, 0.5);
+  border: 1px solid #fff;
+  color: #fff;
+  font-size: 52px;
+  opacity: 0;
+  outline: none;
+  padding: 40px;
+  height: 100%;
+  width: 100%;
+  transition: opacity 1s ease;
+  -webkit-transition: opacity 1s ease; }
+
+.search-icon {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  z-index: 1;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%); }
+  .search-icon:hover {
+    cursor: pointer; }
+  .search-icon path {
+    stroke: #FFF;
     stroke-width: 5px;
     stroke-dasharray: 0;
     stroke-dashoffset: 0;
@@ -125,6 +157,28 @@ body {
     transition: opacity 500ms ease;
     -webkit-transition: opacity 500ms ease;
     opacity: 1;
+    z-index: 1; }
+
+.map {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 0;
+  width: 300px;
+  height: 150px; }
+  @media (min-width: 768px) {
+    .map {
+      display: block; } }
+  .map img {
+    max-width: 100%;
+    height: auto; }
+  .map .point {
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    height: 2px;
+    width: 2px;
     z-index: 1; }
 
 /*# sourceMappingURL=style.css.map */

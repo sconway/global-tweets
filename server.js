@@ -1,5 +1,6 @@
 // Require our dependencies
 var express = require('express'),
+  sentiment = require('sentiment'),
   exphbs    = require('express-handlebars'),
   http      = require('http'),
   mongoose  = require('mongoose'),
@@ -10,7 +11,10 @@ var express = require('express'),
 // Create an express instance and set a port variable
 var app = express(),
     port = process.env.PORT || 1243,
-    term;
+    tweets = [],
+    numTweets = 0,
+    term,
+    tweetInterval;
 
 
 // Disable etag headers on responses
@@ -31,47 +35,57 @@ var server = http.createServer(app).listen(port, function() {
 // Index Route
 app.get('/', function(req, res) {
 
+  tweets = [];
+
   res.sendFile(path.join(__dirname, 'index.html'));
 
   // Initialize socket.io
   var io = require('socket.io').listen(server);
 
-  term = req.query.term || 'a';
+  if (tweetInterval) {
+    clearInterval(tweetInterval);
+  }
 
+  // interval to sent tweets to the client.
+  tweetInterval = setInterval(function() {
+    if (tweets.length > 0) {
+      io.emit('tweet', tweets[numTweets]);
+      numTweets++;
+    }
+  }, 500);
+
+  // Filter based on a search term or nothing, if no term is provided
+  term = req.query.term || ' ';
+
+  // If there is already a stream, destroy it
   if (twit.currentTwitStream) {
     twit.currentTwitStream.destroy();
   }
 
-  // Set a stream listener for tweets matching tracking keywords
-  twit.stream('statuses/filter', { track: 'a'}, function(stream){
+  // Set a stream listener for tweets with geo location
+  twit.stream('statuses/filter', { locations: '-180,-90,180,90' }, function(stream){
     // streamHandler(stream,io);
     stream.on('data', function(data) {
 
       if (data['user'] !== undefined) {
 
-        // Construct a new tweet object
-        var tweet = {
-          twid: data['id_str'],
-          active: false,
-          author: data['user']['name'],
-          avatar: data['user']['profile_image_url'],
-          body: data['text'],
-          date: data['created_at'],
-          screenname: data['user']['screen_name'],
-          coordinates: data['coordinates']
-        };
+        // Construct a new tweet object if we have coordinates to use
+        if (data['coordinates'] && data['text'].indexOf(term) >= 0) {
+          
+          var tweet = {
+            twid: data['id_str'],
+            active: false,
+            author: data['user']['name'],
+            avatar: data['user']['profile_image_url'],
+            body: data['text'],
+            date: data['created_at'],
+            screenname: data['user']['screen_name'],
+            coordinates: data['coordinates'],
+            sentiment: sentiment(data['text'])
+          };
 
-        // only send the tweet if it has a keyword
-        // if (tweet.tone >= 0) {
-        //   io.emit('tweet', tweet);
-        //   console.log("tweet: ", data.text);
-        // } else {
-        //   console.log("uninteresting tweet");
-        // }
-        if (data['coordinates']) {
-          io.emit('tweet', tweet);
-          console.log(data['coordinates']);
-          console.log(data['text']);
+          tweets.push(tweet);
+
         }
       }
     });
@@ -82,27 +96,7 @@ app.get('/', function(req, res) {
 
     twit.currentTwitStream = stream;
   });
+
 });
-
-
-function checkTweet(tweet) {
-  var text   = tweet.toLowerCase(),
-      isGood = text.indexOf("love") >= 0,
-      isBad  = text.indexOf("hate") >= 0,
-      isNeutral = isGood && isBad;
-
-  if ( isNeutral ) {
-      return 2;
-  } else if ( isGood ) {
-      return 1;
-  }else if ( isBad ) {
-      return 0;
-  } else {
-    return -1;
-  }
-}
-
-
-
 
 
