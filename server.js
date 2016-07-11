@@ -11,10 +11,7 @@ var express = require('express'),
 // Create an express instance and set a port variable
 var app = express(),
     port = process.env.PORT || 1243,
-    tweets = [],
-    numTweets = 0,
-    term,
-    tweetInterval;
+    term;
 
 
 // Disable etag headers on responses
@@ -35,24 +32,10 @@ var server = http.createServer(app).listen(port, function() {
 // Index Route
 app.get('/', function(req, res) {
 
-  tweets = [];
-
   res.sendFile(path.join(__dirname, 'index.html'));
 
   // Initialize socket.io
   var io = require('socket.io').listen(server);
-
-  if (tweetInterval) {
-    clearInterval(tweetInterval);
-  }
-
-  // interval to sent tweets to the client.
-  tweetInterval = setInterval(function() {
-    if (tweets.length > 0) {
-      io.emit('tweet', tweets[numTweets]);
-      numTweets++;
-    }
-  }, 500);
 
   // Filter based on a search term or nothing, if no term is provided
   term = req.query.term || ' ';
@@ -84,10 +67,11 @@ app.get('/', function(req, res) {
             sentiment: sentiment(data['text'])
           };
 
-          tweets.push(tweet);
-
+          io.emit('tweet', tweet);
         }
+
       }
+
     });
 
     stream.on('error', function(error) {

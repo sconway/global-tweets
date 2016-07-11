@@ -6,7 +6,7 @@ var camera, scene, renderer, earth, clouds, $rows,
     controlers = [],
     tweets = [],
     points = [],
-    numPoints = 0;
+    numTweets = 0;
 
 var POS_X = 1800;
 var POS_Y = 500;
@@ -55,18 +55,26 @@ function initFeed() {
     socket.on('tweet', function (data) {
 
       if ( data ) {
-
-          var coords = data.coordinates.coordinates;
-
-          $rows = $("#tweets li");
-
           tweets.push( data );
-          prependText( data );
-          drawPoint( coords[1], coords[0], RADIUS, 5, data.sentiment.score );
-          drawSecondaryPoint( coords[1], coords[0] );
       }
 
     });
+
+    setInterval(function() {
+
+        if ( tweets[ numTweets ] ) {
+            var coords = tweets[ numTweets ].coordinates.coordinates;
+
+            $rows = $("#tweets li");
+
+            prependText( tweets[ numTweets ] );
+            drawPoint( coords[1], coords[0], RADIUS, 5, tweets[ numTweets ].sentiment.score );
+            drawSecondaryPoint( coords[1], coords[0] );
+
+            numTweets++;
+        }
+        
+    }, 500);
 
 }
 
@@ -267,8 +275,6 @@ function drawPoint( x, y, rad, height, score ) {
     setTimeout( function() {
         earthGroup.remove( point );
     }, 20000);
-
-    numPoints++;
 
 }
 
