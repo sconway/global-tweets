@@ -2,7 +2,8 @@ var camera, scene, renderer, earth, clouds, $rows,
     mesh, controls, raycaster, INTERSECTED, paused,
     curMouse = new THREE.Vector2(), 
     mouse = new THREE.Vector2(),
-    earthGroup = new THREE.Object3D();
+    earthGroup = new THREE.Object3D(),
+    pointGroup = new THREE.Object3D(),
     controlers = [],
     tweets = [],
     points = [],
@@ -72,8 +73,15 @@ function initFeed() {
             drawSecondaryPoint( coords[1], coords[0] );
 
             numTweets++;
+
+
+            if ( numTweets > 75 ) {
+                pointGroup.children.shift();
+            }
         }
+
         
+
     }, 500);
 
 }
@@ -122,8 +130,8 @@ function addEarth() {
             map: texture,
             color: 0x1a75ff,
             transparent: true,
-            opacity: 0.9,
-            shininess: 1,
+            opacity: 0.8,
+            shininess: 0.9,
         } );
 
         earth = new THREE.Mesh(earthGeometry, earthMaterial);
@@ -158,7 +166,7 @@ function addClouds() {
         var cloudMaterial = new THREE.MeshPhongMaterial( {
             map: texture,
             transparent: true,
-            opacity: 0.1
+            opacity: 0.2
         } );
 
         clouds = new THREE.Mesh( cloudGeometry, cloudMaterial );
@@ -166,6 +174,7 @@ function addClouds() {
         clouds.name = "clouds";
 
         earthGroup.add( clouds );
+        earthGroup.add( pointGroup );
 
         paused = false;
 
@@ -183,9 +192,27 @@ function addLights() {
     light1 = new THREE.DirectionalLight( 0x3333ee, 2, 1000 );
     light1.position.set( POS_X/2, POS_Y/2, POS_Z );
 
-    var ambLight = new THREE.AmbientLight( 0xe7e7e7, 50 );
 
-    scene.add( light1 );
+    // var greenPoint1 = new THREE.PointLight(0x1a75ff, 5, 10000);
+    // greenPoint1.position.set( -1000, -1000, 200 );
+    // scene.add(greenPoint1);
+
+    // var greenPoint2 = new THREE.PointLight(0x1a75ff, 5, 10000);
+    // greenPoint2.position.set( 1000, -1000, -200 );
+    // scene.add(greenPoint2);
+
+    // var greenPoint3 = new THREE.PointLight(0x1a75ff, 5, 10000);
+    // greenPoint3.position.set( -1000, 1000, -200 );
+    // scene.add(greenPoint3);
+
+    // var greenPoint4 = new THREE.PointLight(0x1a75ff, 5, 10000);
+    // greenPoint4.position.set( 1000, 1000, 200 );
+    // scene.add(greenPoint4);
+
+    var hemLight = new THREE.HemisphereLight(0xffe5bb, 0xFFBF00, 2);
+    scene.add(hemLight);
+
+    var ambLight = new THREE.AmbientLight( 0xe7e7e7 );
     scene.add( ambLight );
 }
 
@@ -269,12 +296,13 @@ function drawPoint( x, y, rad, height, score ) {
         posn  = latLongToVector3( x, y, rad, height );
 
     point.position.set( posn.x, posn.y, posn.z );
-    earthGroup.add( point );
+    // earthGroup.add( point );
+    pointGroup.add( point );
     points.push( point );
 
-    setTimeout( function() {
-        earthGroup.remove( point );
-    }, 20000);
+    // setTimeout( function() {
+    //     earthGroup.remove( point );
+    // }, 20000);
 
 }
 
@@ -469,24 +497,6 @@ function handleSearchTerm() {
         html( text ).
         addClass( "active" );
  }
-
-
-
-function moveCamera( posn ) {
-    new TWEEN.Tween( camera.position )
-        .to({
-            x: 1,
-            y: 1,
-            z: 1
-        }, 1500)
-        .easing( TWEEN.Easing.Circular.Out )
-        .onUpdate( function() {
-            renderer.render(scene, camera);
-        })
-        .onComplete( function() {
-        })
-        .start();
-}
 
 
 /**

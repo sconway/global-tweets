@@ -101,6 +101,7 @@ body {
 
 .tweet-box {
   color: #fff;
+  display: none;
   position: fixed;
   width: 30%;
   height: 80%;
@@ -110,6 +111,9 @@ body {
   opacity: 1;
   transition: opacity 500ms ease;
   -webkit-transition: opacity 500ms ease; }
+  @media (min-width: 768px) {
+    .tweet-box {
+      display: block; } }
   .tweet-box ul {
     margin: 0;
     padding: 0 10% 0 20px;
