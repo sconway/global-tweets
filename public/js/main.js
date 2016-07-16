@@ -7,7 +7,9 @@ var camera, scene, renderer, earth, clouds, $rows,
     controlers = [],
     tweets = [],
     points = [],
-    numTweets = 0;
+    numTweets = 0,
+    searching = false,
+    isHoveringOnTweet = false;
 
 var POS_X = 1800;
 var POS_Y = 500;
@@ -18,7 +20,7 @@ var RADIUS = 400;
 var WIDTH = 1000;
 var HEIGHT = 600;
 var CAMERA_Z = 1000;
-var POINT_SIZE = 5;
+var POINT_SIZE = 1;
 
 
 /**
@@ -55,7 +57,7 @@ function initFeed() {
     // specified by the supplied coordinates.
     socket.on('tweet', function (data) {
 
-      if ( data ) {
+      if ( data && !paused && !searching) {
           tweets.push( data );
       }
 
@@ -63,7 +65,7 @@ function initFeed() {
 
     setInterval(function() {
 
-        if ( tweets[ numTweets ] ) {
+        if ( tweets[ numTweets ] && !paused && !searching ) {
             var coords = tweets[ numTweets ].coordinates.coordinates;
 
             $rows = $("#tweets li");
@@ -79,8 +81,6 @@ function initFeed() {
                 pointGroup.children.shift();
             }
         }
-
-        
 
     }, 500);
 
@@ -123,7 +123,7 @@ function addEarth() {
         color         = createGlowMaterial();
 
     // loads the earth image and once it is done, add the clouds.
-    loader.load('images/earth-gray.jpg', function(texture) {
+    loader.load('images/earth.jpg', function(texture) {
         texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 
         var earthMaterial = new THREE.MeshPhongMaterial( {
@@ -144,7 +144,8 @@ function addEarth() {
             controlers.push( new THREE.TrackballControls( camera ) );
             controlers.push( new THREE.DeviceOrientationControls( earthGroup , true ) );
         } else {
-            controlers.push( new THREE.OrbitControls( camera, renderer.domElement ) );
+            // controlers.push( new THREE.OrbitControls( camera, renderer.domElement ) );
+            controlers.push( new THREE.TrackballControls( camera ) );
         }
 
         addClouds();
@@ -209,7 +210,7 @@ function addLights() {
     // greenPoint4.position.set( 1000, 1000, 200 );
     // scene.add(greenPoint4);
 
-    var hemLight = new THREE.HemisphereLight(0xffe5bb, 0xFFBF00, 2);
+    var hemLight = new THREE.HemisphereLight(0x333333, 0x333333, 1);
     scene.add(hemLight);
 
     var ambLight = new THREE.AmbientLight( 0xe7e7e7 );
@@ -300,6 +301,8 @@ function drawPoint( x, y, rad, height, score ) {
     pointGroup.add( point );
     points.push( point );
 
+    growObject( point );
+
     // setTimeout( function() {
     //     earthGroup.remove( point );
     // }, 20000);
@@ -382,9 +385,9 @@ function realTimeSearch() {
         // the feed as it was before. Otherwise, set the mutex
         // so the feed will not continue while we are filtering.
         if ( val.length < 1 ) {
-            feedMutex = false;
+            searching = false;
         } else {
-            feedMutex = true;
+            searching = true;
 
             $rows.show().filter(function() {
                 var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
@@ -414,6 +417,33 @@ function handleTweetHover() {
         paused = false;
     });
 
+
+    $("#tweet").hover(function() {
+        isHoveringOnTweet = true;
+    }, function() {
+        isHoveringOnTweet = false;
+    })
+
+}
+
+
+/**
+ * Scales the supplied object up by tweening the scale property.
+ */
+function growObject( sphere ) {
+    new TWEEN.Tween( sphere.scale )
+        .to({ 
+            x: 5,
+            y: 5,
+            z: 5
+        }, 500)
+        .easing( TWEEN.Easing.Elastic.InOut )
+        .onUpdate( function() {
+            renderer.render(scene, camera);
+        })
+        .onComplete( function() {
+        })
+        .start();
 }
 
 
@@ -485,17 +515,26 @@ function handleSearchTerm() {
  *
  * @param     x       :    Integer
  * @param     y       :    Integer
- * @param     text    :    String
+ * @param     tweet    :    Object
  *
  */
- function showText( x, y, text ) {
-    $("#tweetText").
+ function showText( tweet ) {
+
+    var tweetLink = "https://twitter.com/" + tweet.screenname + "/status/" +tweet.twid, 
+        tweetProf = "https://twitter.com/" + tweet.screenname;
+
+    $("#tweet").
         css({
-            left: x + "px",
-            top: y + "px"
+            left: curMouse.x - 5 + "px",
+            top: curMouse.y - 5 + "px"
         }).
-        html( text ).
         addClass( "active" );
+
+    $("#tweetText").html( tweet.body );
+    $("#tweetImg").attr( "src", tweet.avatar );
+    $("#tweetHandle").html( "@" + tweet.screenname );
+    $("#tweetStatus").attr( "href",  tweetLink );
+    $("#tweetProfile").attr( "href",  tweetProf );
  }
 
 
@@ -512,11 +551,11 @@ function onIntersection( object ) {
     console.log(INTERSECTED);
 
     var index = points.indexOf( object ),
-        text  = tweets[ index ].body,
+        tweet  = tweets[ index ],
         curX  = curMouse.x,
         curY  = curMouse.y;
 
-    showText( curMouse.x, curMouse.y, text );
+    showText( tweet );
 
     // console.log("intersection: ", object.position );
     // object.parent.lookAt( camera.position );
@@ -528,10 +567,12 @@ function onIntersection( object ) {
  * Called when there aren't any intersections. Performs default behavior. 
  */
 function onNoIntersections() {
-    INTERSECTED = null;
-    paused = false;
+    if ( !isHoveringOnTweet ) {
+        INTERSECTED = null;
+        paused = false;
 
-    $("#tweetText").removeClass("active");
+        $("#tweet").removeClass("active");
+    }
 }
 
 
@@ -551,6 +592,7 @@ function animate() {
     requestAnimationFrame( animate );
 
     updateControlers();
+    TWEEN.update();
     renderer.render( scene, camera );
     raycaster.setFromCamera( mouse, camera );
 
@@ -567,7 +609,7 @@ function animate() {
     if ( intersects.length > 0 ) {
 
         // if a different object is hovered on and it's a map point.
-        if ( INTERSECTED != intersects[ 0 ].object ) {
+        if ( INTERSECTED != intersects[ 0 ].object && !isHoveringOnTweet ) {
             onIntersection( intersects[ 0 ].object );
         }
 
