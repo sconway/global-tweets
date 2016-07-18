@@ -100,6 +100,8 @@ body {
     -webkit-transition: all 2s ease; }
 
 .tweet-box {
+  background: rgba(51, 51, 51, 0.5);
+  border: 1px solid #fff;
   color: #fff;
   display: none;
   position: fixed;
@@ -116,16 +118,19 @@ body {
       display: block; } }
   .tweet-box ul {
     margin: 0;
-    padding: 0 10% 0 20px;
+    padding: 0 10% 0 0;
     overflow-x: hidden;
     overflow-y: scroll;
     height: 90%;
     width: 90%; }
   .tweet-box li {
     font-family: "Titillium Web", sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     list-style: none;
-    margin-bottom: 15px; }
+    padding: 15px;
+    width: 103%; }
+    .tweet-box li:nth-child(odd) {
+      background-color: rgba(151, 151, 151, 0.5); }
     .tweet-box li.good {
       color: #0F0; }
     .tweet-box li.bad {
@@ -135,13 +140,15 @@ body {
 
 .tweet-search {
   background: rgba(51, 51, 51, 0.5);
-  border: 1px solid #fff;
+  border: none;
+  border-bottom: 1px solid #fff;
+  color: #fff;
   display: block;
   font-size: 18px;
-  margin: 0 auto 15px;
+  margin: 0;
   padding-left: 15px;
   height: 50px;
-  width: 90%; }
+  width: 100%; }
 
 .tweet {
   background-color: rgba(51, 51, 51, 0.7);
@@ -168,12 +175,19 @@ body {
 .tweet-user {
   display: flex;
   align-items: center; }
+  .tweet-user img {
+    max-width: 100%;
+    height: auto; }
 
 .tweet-handle {
   margin-left: 20px;
   color: #f8f8f8;
   font-size: 18px;
-  text-decoration: none; }
+  text-decoration: none;
+  transition: all 250ms ease;
+  -webkit-transition: all 250ms ease; }
+  .tweet-handle:hover {
+    color: #3c28ca; }
 
 .tweet-text {
   border: 1px solid rgba(255, 255, 255, 0.7);

@@ -41,6 +41,7 @@ function init() {
 
     document.addEventListener( 'mousemove', onDocumentMouseMove, false );
     window.addEventListener( 'resize', onWindowResize, false );
+    window.addEventListener('mousewheel', mousewheel, false);
 
 }
 
@@ -144,8 +145,8 @@ function addEarth() {
             controlers.push( new THREE.TrackballControls( camera ) );
             controlers.push( new THREE.DeviceOrientationControls( earthGroup , true ) );
         } else {
-            // controlers.push( new THREE.OrbitControls( camera, renderer.domElement ) );
-            controlers.push( new THREE.TrackballControls( camera ) );
+            controlers.push( new THREE.OrbitControls( camera, renderer.domElement ) );
+            // controlers.push( new THREE.TrackballControls( camera ) );
         }
 
         addClouds();
@@ -192,23 +193,6 @@ function addClouds() {
 function addLights() {
     light1 = new THREE.DirectionalLight( 0x3333ee, 2, 1000 );
     light1.position.set( POS_X/2, POS_Y/2, POS_Z );
-
-
-    // var greenPoint1 = new THREE.PointLight(0x1a75ff, 5, 10000);
-    // greenPoint1.position.set( -1000, -1000, 200 );
-    // scene.add(greenPoint1);
-
-    // var greenPoint2 = new THREE.PointLight(0x1a75ff, 5, 10000);
-    // greenPoint2.position.set( 1000, -1000, -200 );
-    // scene.add(greenPoint2);
-
-    // var greenPoint3 = new THREE.PointLight(0x1a75ff, 5, 10000);
-    // greenPoint3.position.set( -1000, 1000, -200 );
-    // scene.add(greenPoint3);
-
-    // var greenPoint4 = new THREE.PointLight(0x1a75ff, 5, 10000);
-    // greenPoint4.position.set( 1000, 1000, 200 );
-    // scene.add(greenPoint4);
 
     var hemLight = new THREE.HemisphereLight(0x333333, 0x333333, 1);
     scene.add(hemLight);
@@ -275,6 +259,19 @@ function onDocumentMouseMove( event ) {
     curMouse.y = event.clientY;
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
     mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+}
+
+
+
+function mousewheel(event) {
+
+    var fovMAX = 160;
+    var fovMIN = 1;
+
+    camera.fov -= event.wheelDeltaY * 0.05;
+    camera.fov = Math.max( Math.min( camera.fov, fovMAX ), fovMIN );
+    camera.projectionMatrix = new THREE.Matrix4().makePerspective(camera.fov, window.innerWidth / window.innerHeight, camera.near, camera.far);
+
 }
 
 
@@ -411,10 +408,12 @@ function handleTweetHover() {
 
         paused = true;
         console.log( "position: ", points[ index ].position );
+        window.removeEventListener( 'mousewheel', mousewheel );
     });
 
     $("#tweets").on( "mouseleave", "li", function() {
         paused = false;
+        window.addEventListener('mousewheel', mousewheel, false);
     });
 
 
