@@ -105,7 +105,7 @@ body {
   color: #fff;
   display: none;
   position: fixed;
-  width: 30%;
+  width: 350px;
   height: 80%;
   left: 10px;
   top: 10%;
@@ -118,17 +118,17 @@ body {
       display: block; } }
   .tweet-box ul {
     margin: 0;
-    padding: 0 10% 0 0;
+    padding: 0 50px 0 0;
     overflow-x: hidden;
     overflow-y: scroll;
     height: 90%;
-    width: 90%; }
+    width: 100%; }
   .tweet-box li {
     font-family: "Titillium Web", sans-serif;
     font-size: 16px;
     list-style: none;
     padding: 15px;
-    width: 103%; }
+    width: calc(100% - 30px); }
     .tweet-box li:nth-child(odd) {
       background-color: rgba(151, 151, 151, 0.5); }
     .tweet-box li.good {

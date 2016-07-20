@@ -385,6 +385,7 @@ function realTimeSearch() {
             searching = false;
         } else {
             searching = true;
+            $rows     = $("#tweets li"); //otherwise $rows will miss an item
 
             $rows.show().filter(function() {
                 var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
