@@ -8,7 +8,8 @@
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.6/socket.io.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.6/socket.io.js"></script> -->
+    <script src="js/socket.js"></script>
     <script src="js/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="js/three.min.js"></script>
     <script type="text/javascript" src="js/tween.js"></script>
@@ -69,11 +70,14 @@
         </aside>
 
         <figure id="map" class="map">
+             <aside class="tweet-count" >
+                <span id="tweetCount">0</span> Tweets
+            </aside>
             <img src="images/earth2.png" />
         </figure>
 
     </div>
-
+    <!-- END MAIN CONTAINER -->
 
 
     <div id="tweet" class="tweet">
@@ -86,7 +90,6 @@
         <a id="tweetStatus" href="" target="_blank">
             <section id="tweetText" class="tweet-text"></section>
         </a>
-        
     </div>
 
     <script type="text/javascript" src="js/main.js"></script>

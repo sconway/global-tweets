@@ -8,6 +8,7 @@ var camera, scene, renderer, earth, clouds, $rows,
     tweets = [],
     points = [],
     numTweets = 0,
+    tweetCount = 0,
     searching = false,
     isHoveringOnTweet = false;
 
@@ -58,9 +59,16 @@ function initFeed() {
     // specified by the supplied coordinates.
     socket.on('tweet', function (data) {
 
-      if ( data && !paused && !searching) {
+        tweetCount++;
+
+        // only push our data up if the user is not hovering over a tweet
+        // of searching through the list of tweets.
+        if ( data && !paused && !searching) {
           tweets.push( data );
-      }
+        }
+
+        // update the total number of tweets
+        $("#tweetCount").html( tweetCount );
 
     });
 
@@ -270,7 +278,12 @@ function mousewheel(event) {
 
     camera.fov -= event.wheelDeltaY * 0.05;
     camera.fov = Math.max( Math.min( camera.fov, fovMAX ), fovMIN );
-    camera.projectionMatrix = new THREE.Matrix4().makePerspective(camera.fov, window.innerWidth / window.innerHeight, camera.near, camera.far);
+    camera.projectionMatrix = new THREE.Matrix4().makePerspective( 
+                                                    camera.fov, 
+                                                    window.innerWidth / window.innerHeight, 
+                                                    camera.near, 
+                                                    camera.far 
+                                                );
 
 }
 
