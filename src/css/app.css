@@ -1,0 +1,450 @@
+html {
+	 height: 100%;
+	 width: 100%;
+}
+ body {
+	 background: #0f151d;
+	 color: #fff;
+	 font-family: 'Press Start 2P', cursive;
+	 margin: 0;
+	 overflow: hidden;
+	 height: 100%;
+	 width: 100%;
+}
+ body.pointer {
+	 cursor: pointer;
+}
+#canvas {
+	height: 100vh;
+	width: 100vw;
+}
+ #wrapper {
+	 position: absolute;
+	 margin: 0;
+	 height: 100%;
+	 width: 100%;
+	 transition: transform 500ms ease-in-out;
+}
+ #wrapper.active {
+	 transform: translateX(20%);
+}
+ #wrapper.active .country__information {
+	 opacity: 1;
+}
+ #wrapper.active .country__information .country--name {
+	 opacity: 1;
+}
+ #wrapper.active .country__information .country__detail {
+	 opacity: 1;
+}
+ #wrapper.active .country__information .country__detail:nth-of-type(1) {
+	 transition: opacity 300ms ease-in-out 800ms;
+}
+ #wrapper.active .country__information .country__detail:nth-of-type(2) {
+	 transition: opacity 300ms ease-in-out 1100ms;
+}
+ #wrapper.active .country__information .country__detail:nth-of-type(3) {
+	 transition: opacity 300ms ease-in-out 1400ms;
+}
+ #wrapper.active .country__information .country__detail:nth-of-type(4) {
+	 transition: opacity 300ms ease-in-out 1700ms;
+}
+ #wrapper.active .country__information .country__detail:nth-of-type(5) {
+	 transition: opacity 300ms ease-in-out 2000ms;
+}
+ #wrapper.active .country--name {
+	 opacity: 0;
+}
+ #container {
+	 position: absolute;
+	 height: 100%;
+	 width: 100%;
+}
+ #three-container {
+	 position: absolute;
+	 margin: 0;
+	 height: 100%;
+	 width: 100%;
+}
+ .glitch, .country__information .country--name {
+	 overflow: hidden;
+}
+ .glitch::before, .country__information .country--name::before, .glitch::after, .country__information .country--name::after {
+	 background: transparent;
+	 color: white;
+	 content: attr(data-text);
+	 position: absolute;
+	 top: 2px;
+	 transform: translateX(-50%);
+	 overflow: hidden;
+	 clip: rect(0, 900px, 0, 0);
+	 height: 100%;
+	 width: 100%;
+}
+ .glitch::before, .country__information .country--name::before {
+	 animation: noise-anim-2 5s infinite linear alternate-reverse;
+	 left: calc(50%);
+	 text-shadow: 1px 1px blue;
+}
+ .glitch::after, .country__information .country--name::after {
+	 animation: noise-anim 4s infinite linear alternate-reverse;
+	 left: calc(50%);
+	 text-shadow: 1px 1px red;
+}
+ @keyframes noise-anim {
+	 0% {
+		 clip: rect(18px, 9999px, 166px, 0);
+	}
+	 5% {
+		 clip: rect(41px, 9999px, 134px, 0);
+	}
+	 10% {
+		 clip: rect(46px, 9999px, 118px, 0);
+	}
+	 15% {
+		 clip: rect(5px, 9999px, 74px, 0);
+	}
+	 20% {
+		 clip: rect(35px, 9999px, 179px, 0);
+	}
+	 25% {
+		 clip: rect(44px, 9999px, 77px, 0);
+	}
+	 30% {
+		 clip: rect(9px, 9999px, 98px, 0);
+	}
+	 35% {
+		 clip: rect(8px, 9999px, 161px, 0);
+	}
+	 40% {
+		 clip: rect(5px, 9999px, 131px, 0);
+	}
+	 45% {
+		 clip: rect(23px, 9999px, 32px, 0);
+	}
+	 50% {
+		 clip: rect(34px, 9999px, 105px, 0);
+	}
+	 55% {
+		 clip: rect(44px, 9999px, 136px, 0);
+	}
+	 60% {
+		 clip: rect(49px, 9999px, 161px, 0);
+	}
+	 65% {
+		 clip: rect(4px, 9999px, 33px, 0);
+	}
+	 70% {
+		 clip: rect(26px, 9999px, 154px, 0);
+	}
+	 75% {
+		 clip: rect(3px, 9999px, 4px, 0);
+	}
+	 80% {
+		 clip: rect(23px, 9999px, 128px, 0);
+	}
+	 85% {
+		 clip: rect(39px, 9999px, 26px, 0);
+	}
+	 90% {
+		 clip: rect(42px, 9999px, 140px, 0);
+	}
+	 95% {
+		 clip: rect(47px, 9999px, 3px, 0);
+	}
+	 100% {
+		 clip: rect(17px, 9999px, 118px, 0);
+	}
+}
+ @keyframes noise-anim-2 {
+	 0% {
+		 clip: rect(47px, 9999px, 140px, 0);
+	}
+	 5% {
+		 clip: rect(7px, 9999px, 155px, 0);
+	}
+	 10% {
+		 clip: rect(50px, 9999px, 80px, 0);
+	}
+	 15% {
+		 clip: rect(36px, 9999px, 33px, 0);
+	}
+	 20% {
+		 clip: rect(46px, 9999px, 140px, 0);
+	}
+	 25% {
+		 clip: rect(7px, 9999px, 7px, 0);
+	}
+	 30% {
+		 clip: rect(39px, 9999px, 135px, 0);
+	}
+	 35% {
+		 clip: rect(20px, 9999px, 163px, 0);
+	}
+	 40% {
+		 clip: rect(7px, 9999px, 65px, 0);
+	}
+	 45% {
+		 clip: rect(21px, 9999px, 190px, 0);
+	}
+	 50% {
+		 clip: rect(38px, 9999px, 24px, 0);
+	}
+	 55% {
+		 clip: rect(13px, 9999px, 142px, 0);
+	}
+	 60% {
+		 clip: rect(32px, 9999px, 64px, 0);
+	}
+	 65% {
+		 clip: rect(4px, 9999px, 105px, 0);
+	}
+	 70% {
+		 clip: rect(45px, 9999px, 63px, 0);
+	}
+	 75% {
+		 clip: rect(5px, 9999px, 151px, 0);
+	}
+	 80% {
+		 clip: rect(7px, 9999px, 190px, 0);
+	}
+	 85% {
+		 clip: rect(20px, 9999px, 20px, 0);
+	}
+	 90% {
+		 clip: rect(32px, 9999px, 29px, 0);
+	}
+	 95% {
+		 clip: rect(35px, 9999px, 49px, 0);
+	}
+	 100% {
+		 clip: rect(22px, 9999px, 6px, 0);
+	}
+}
+ .country--name {
+	 font-size: 86px;
+	 letter-spacing: 3px;
+	 line-height: 1.5;
+	 opacity: 0;
+	 position: absolute;
+	 left: 50%;
+	 top: 50%;
+	 text-align: center;
+	 text-transform: uppercase;
+	 transform: translate(-50%, -50%);
+	 transition: opacity 300ms ease-in-out;
+	 width: 80%;
+}
+ .country--name.visible {
+	 opacity: 1;
+}
+ .country__information {
+	 opacity: 0;
+	 position: absolute;
+	 left: -20%;
+	 height: 100%;
+	 width: 500px;
+	 transition: opacity 500ms ease-in-out;
+}
+ .country__information .country--name {
+	 font-size: 20px;
+	 margin: 50px auto;
+	 min-height: 30px;
+	 position: relative;
+	 left: auto;
+	 top: auto;
+	 transform: none;
+	 width: 100%;
+	 white-space: inherit;
+	 transition: all 300ms ease-in-out 500ms;
+}
+ .country__details {
+	 padding: 20px 20px 20px 70px;
+}
+ .country__detail {
+	 font-size: 20px;
+	 letter-spacing: 3px;
+	 line-height: 1.5;
+	 margin-bottom: 30px;
+	 opacity: 0;
+	 transition: opacity 300ms ease-in-out;
+}
+ .country__detail label {
+	 display: block;
+	 font-size: 10px;
+	 letter-spacing: 6px;
+	 margin-bottom: 7px;
+	 text-transform: uppercase;
+}
+ .country__detail--languages {
+	 word-break: break-all;
+}
+ .tweet-count {
+	 position: absolute;
+	 right: 30px;
+	 top: 20px;
+}
+ .tweet-box {
+	 position: absolute;
+	 min-height: 100px;
+	 width: 200px;
+	 z-index: -1;
+}
+ .tweet-box.visible {
+	 z-index: 1;
+}
+ .tweet-box.visible .tweet-box--avatar, .tweet-box.visible .tweet-box--user-name, .tweet-box.visible .tweet-box--tweet-text {
+	 transition: opacity 500ms ease-in-out 400ms;
+	 opacity: 1;
+}
+ .tweet-box.top-left {
+	 transform: translate(-131%, -75px);
+}
+ .tweet-box.top-left .tweet-box--line.top {
+	 transform: rotate(180deg);
+}
+ .tweet-box.top-left .tweet-box--line.top::before {
+	 transition: width 200ms linear 200ms;
+	 width: 100%;
+}
+ .tweet-box.top-left .tweet-box--line.side {
+	 left: calc(100% - 28px);
+	 top: 61px;
+	 transform: rotate(50deg);
+}
+ .tweet-box.top-left .tweet-box--line.side::before {
+	 right: 0;
+	 transition: width 200ms linear;
+	 width: 100%;
+}
+ .tweet-box.top-right {
+	 transform: translate(31%, -75px);
+}
+ .tweet-box.top-right .tweet-box--line.top::before {
+	 transition: width 200ms linear 200ms;
+	 width: 100%;
+}
+ .tweet-box.top-right .tweet-box--line.side {
+	 left: -40%;
+	 transform: rotate(-50deg);
+}
+ .tweet-box.top-right .tweet-box--line.side::before {
+	 transition: width 200ms linear;
+	 width: 100%;
+}
+ .tweet-box.bottom-left {
+	 transform: translate(-130%, calc(-100% + 75px));
+}
+ .tweet-box.bottom-left .tweet-box--line.top {
+	 transform: rotate(180deg);
+	 top: 100%;
+}
+ .tweet-box.bottom-left .tweet-box--line.top::before {
+	 transition: width 200ms linear 200ms;
+	 width: 100%;
+}
+ .tweet-box.bottom-left .tweet-box--line.side {
+	 left: calc(100% - 28px);
+	 top: calc(100% - 61px);
+	 transform: rotate(-50deg);
+}
+ .tweet-box.bottom-left .tweet-box--line.side::before {
+	 right: 0;
+	 transition: width 200ms linear;
+	 width: 100%;
+}
+ .tweet-box.bottom-right {
+	 transform: translate(30%, calc(-100% + 75px));
+}
+ .tweet-box.bottom-right .tweet-box--line.top {
+	 top: 100%;
+}
+ .tweet-box.bottom-right .tweet-box--line.top::before {
+	 transition: width 200ms linear 200ms;
+	 width: 100%;
+}
+ .tweet-box.bottom-right .tweet-box--line.side {
+	 left: -40%;
+	 top: 100%;
+	 transform: rotate(50deg);
+}
+ .tweet-box.bottom-right .tweet-box--line.side::before {
+	 transition: width 200ms linear;
+	 width: 100%;
+}
+ .tweet-box .tweet-box--avatar, .tweet-box .tweet-box--user-name, .tweet-box .tweet-box--tweet-text {
+	 opacity: 0;
+	 overflow: hidden;
+}
+ .tweet-box--line {
+	 background: transparent;
+	 height: 1px;
+	 position: absolute;
+}
+ .tweet-box--line::before {
+	 background: #fff;
+	 content: "";
+	 position: absolute;
+	 height: 1px;
+	 width: 0;
+}
+ .tweet-box--line.top {
+	 left: 0;
+	 top: 0;
+	 width: 100%;
+}
+ .tweet-box--line.side {
+	 transform-origin: right center;
+	 transition: width 200ms linear;
+	 width: 40%;
+}
+.tweet-box--user-name {
+	font-size: 14px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.tweet-box--avatar {
+	 width: 75px;
+}
+ .tweet-box--tweet-text {
+	 font-family: 'Roboto', arial, sans-serif;
+}
+ .back-btn {
+	 opacity: 0;
+	 position: absolute;
+	 right: calc(20% - 35px);
+	 top: 30px;
+	 height: 15px;
+	 width: 35px;
+	 transition: all 100ms ease;
+	 z-index: -1;
+}
+ .back-btn:before {
+	 border-left: 2px solid #fff;
+	 border-bottom: 2px solid #fff;
+	 content: "";
+	 height: 15px;
+	 width: 15px;
+	 left: 2px;
+	 position: absolute;
+	 transform: rotate(45deg);
+}
+ .back-btn::after {
+	 background: #fff;
+	 content: "";
+	 height: 2px;
+	 width: 100%;
+	 position: absolute;
+	 top: 50%;
+	 transform: translateY(-50%);
+}
+ .back-btn:hover {
+	 cursor: pointer;
+}
+ .back-btn.visible {
+	 opacity: 1;
+	 transform: translateX(-65px);
+	 transition: opacity 325ms ease-in-out 500ms, transform 500ms ease-in-out 500ms;
+	 z-index: 1;
+}
+ 

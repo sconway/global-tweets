@@ -1,0 +1,43 @@
+{
+  "name": "global-tweets",
+  "version": "1.0.0",
+  "description": "\"view tweets from around the globe in real time\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server",
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "body-parser": "^1.20.3",
+    "d3": "^7.9.0",
+    "express": "^4.21.1",
+    "http": "^0.0.1-security",
+    "path": "^0.12.7",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.3",
+    "redux": "^3.6.0",
+    "request": "^2.88.2",
+    "sentiment": "^3.0.0",
+    "shaderfrog-runtime": "0.0.15",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "three": "^0.171.0",
+    "three-canvas-renderer": "^2.0.0",
+    "three-obj": "^0.6.5",
+    "three-obj-loader": "^1.0.2",
+    "three-orbit-controls": "^82.1.0",
+    "three-trackballcontrols": "0.0.5",
+    "topojson": "^1.6.19",
+    "topojson-client": "^3.1.0",
+    "tween.js": "^16.6.0",
+    "util": "^0.12.5",
+    "vite": "^5.4.11",
+    "vite-plugin-commonjs": "^0.10.4"
+  }
+}

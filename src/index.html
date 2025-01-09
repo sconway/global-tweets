@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#db5945" />
+    <title>3D Twitter Visualizer</title>
+    <meta name="author" content="Scott Conway" />
+    <meta name="description" content="description here" />
+    <meta name="keywords" content="keywords,here" />
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Press+Start+2P"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="body">
+    <div id="wrapper">
+      <!-- Root for the React portion -->
+      <section id="container"></section>
+      <!-- Root for the Three.js portion -->
+      <section id="three-container">
+        <canvas id="canvas"></canvas>
+      </section>
+    </div>
+
+    <script type="module" src="./js/index.js"></script>
+  </body>
+</html>
