@@ -10,10 +10,10 @@ import * as THREE from 'three'
 export const createEarth = (shape) => {
   // loads the earth images and once it is done, expands it
   let loader       = new THREE.TextureLoader(),
-      texture      = loader.load("/images/earth.png"),
-      bumpTexture  = loader.load("/images/earthbump.jpg"),
-      specTexture  = loader.load("/images/earthspec.jpg"),
-      cloudTexture = loader.load("/images/clouds.png");
+      texture      = loader.load("images/earth.png"),
+      bumpTexture  = loader.load("images/earthbump.jpg"),
+      specTexture  = loader.load("images/earthspec.jpg"),
+      cloudTexture = loader.load("images/clouds.png");
 
   texture.wrapS      = texture.wrapT      = THREE.RepeatWrapping;
   bumpTexture.wrapS  = bumpTexture.wrapT  = THREE.RepeatWrapping;
