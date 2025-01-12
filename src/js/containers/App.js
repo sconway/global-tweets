@@ -172,7 +172,7 @@ class App extends Component {
       worldJson = null;
 
     try {
-      worldJson = await json("/build/json/world.json")
+      worldJson = await json("/global-tweets/build/json/world.json")
     } catch (error) {
       console.log("JSON error: ", error)
     }
@@ -263,7 +263,7 @@ class App extends Component {
     );
   
     try {
-      const countriesJson = await json("/build/json/countries.json")
+      const countriesJson = await json("/global-tweets/build/json/countries.json")
       self.countryData = countriesJson;
     } catch (error) {
       console.log("JSON error: ", error)
