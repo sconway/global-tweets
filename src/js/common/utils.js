@@ -137,7 +137,7 @@ export const setCountryImage = (countryCode) => {
   let loader = new THREE.TextureLoader();
 
   scene.getObjectByName("cloud").material.map = loader.load(
-    "build/images/flags/" + countryCode + ".png"
+    "/build/images/flags/" + countryCode + ".png"
   );
 
   scene.getObjectByName("cloud").rotation.y = -Math.PI / 2;
@@ -150,6 +150,6 @@ export const setCountryImageBack = () => {
   let loader = new THREE.TextureLoader();
 
   scene.getObjectByName("cloud").material.map = loader.load(
-    "build/images/clouds.png"
+    "/build/images/clouds.png"
   );
 };
