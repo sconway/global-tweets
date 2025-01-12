@@ -2,7 +2,7 @@
 const initialState = {
   numTweets: 0,
   numCountryTweets: 0,
-  tweetImage: "./images/clouds.png",
+  tweetImage: "/global-tweets/build/images/clouds.png",
   tweetName: "",
   tweetText: ""
 }
