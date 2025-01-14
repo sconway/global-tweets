@@ -91,20 +91,20 @@ export const isStaticClick = (event, lastPoint) => {
  *
  */
 export const getColor = (score) => {
-  if (score < -2) {
+  if (score < 0.15) {
     return 0xff0000;
-  } else if (score < -1) {
+  } else if (score < 0.3) {
     return 0xff8000;
-  } else if (score < 0) {
+  } else if (score < 0.45) {
     return 0xffff00;
-  } else if (score == 0) {
+  } else if (score <  0.6) {
     return 0xffffff;
-  } else if (score > 2) {
-    return 0x00ff00;
-  } else if (score > 1) {
-    return 0x40ff00;
-  } else if (score > 0) {
+  } else if (score < 0.75) {
     return 0xbfff00;
+  } else if (score < 0.9) {
+    return 0x40ff00;
+  } else {
+    return 0x00ff00;
   }
 };
 
